@@ -34,12 +34,3 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
-
-
-
-// Test Routes
-
-// app.get("/AuthTest", requireAuth, (req, res) => {
-//   res.send(`your email : ${req.user.email}`);
-// });
-

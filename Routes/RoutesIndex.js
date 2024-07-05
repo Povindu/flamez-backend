@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 const AuthRoutes = require("./AdminAuth.Routes");
-
+const ServiceItemRoutes = require("./ServiceItems.Routes");
 
 
 
 router.use("/auth", AuthRoutes);
+router.use("/services", ServiceItemRoutes);
 
 
 
