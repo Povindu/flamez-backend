@@ -8,9 +8,13 @@ const { generateRefreshToken } = require("../Utils/generateRefreshToken");
 
 //Admin signup
 const adminSignUp = async (req, res) => {
+  
   console.log("adminsignup");
+
   const { firstName, lastName, email, password } = req.body;
   console.log(firstName, lastName, email, password);
+
+
   if (!firstName || !lastName || !email || !password) {
     return res
       .status(400)
