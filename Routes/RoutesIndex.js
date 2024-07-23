@@ -3,11 +3,12 @@ const router = express.Router();
 
 const AuthRoutes = require("./AdminAuth.Routes");
 const ServiceItemRoutes = require("./ServiceItems.Routes");
-
+const ImageUploadRoutes = require("./ImageUpload.Routes");
 
 
 router.use("/auth", AuthRoutes);
 router.use("/services", ServiceItemRoutes);
+router.use("/upload", ImageUploadRoutes, );
 
 
 
