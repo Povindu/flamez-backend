@@ -26,7 +26,7 @@ jobs:
       - name: Pull image from the docker hub
         run: docker pull povindu/flameztest:latest
       - name: Run Docker Container
-        run: docker run -d -p 4000:4000 --name flamez-backend-container povindu/flameztest:latest
+        run: docker run -d -p 4000:4000 --name flamez-backend-container -e MONGO_URI='${{ secrets.MONGO_URI}}'  povindu/flameztest:latest
 
 
 
