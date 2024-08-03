@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
-      - name: login to docker hub
+      - name: Login to docker hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Docker Image
         run: docker build -t povindu/flameztest .
@@ -26,7 +26,7 @@ jobs:
       - name: Pull image from the docker hub
         run: docker pull povindu/flameztest:latest
       - name: Run Docker Container
-        run: docker run -d -p 4000:4000 --name flamez-backend-container -e MONGO_URI='${{ secrets.MONGO_URI}}'  povindu/flameztest:latest
+        run: docker start -d -p 4000:4000 --name flamez-backend-container -e MONGO_URI='${{ secrets.MONGO_URI}}' REFRESH_TOKEN_SECRET='{{${{ secrets.REFRESH_TOKEN_SECRET}}}}' ACCESS_TOKEN_SECRET='{{${{ secrets.ACCESS_TOKEN_SECRET}}}}'  povindu/flameztest:latest
 
 
 
