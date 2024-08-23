@@ -13,7 +13,7 @@ router.use("/upload", ImageUploadRoutes, );
 
 
 router.get("/", (req, res) => {
-  res.status(200).json({ message: "CareSync Test Endpoint v1" });
+  res.status(200).json({ message: "Flamez Test Endpoint v1" });
 });
 
 
