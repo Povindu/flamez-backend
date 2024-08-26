@@ -30,7 +30,7 @@ jobs:
       - name: Remove the existing container
         run: docker rm flamez-backend-container || true
       - name: Run Docker Container
-        run: docker run -d -p 4000:4000 --name flamez-backend-container -e MONGO_URI='${{ secrets.MONGO_URI}}'  povindu/flameztest:latest
+        run: docker run -d -p 4000:4000 --name flamez-backend-container -e MONGO_URI='${{ secrets.MONGO_URI }}'  povindu/flameztest:latest
 
 
         
