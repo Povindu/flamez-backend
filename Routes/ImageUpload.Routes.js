@@ -24,6 +24,8 @@ async function handleUpload(file) {
 }
 
 router.post("/", upload.single("my_file"), async (req, res) => {
+  console.log("uploadImage");
+  console.log(req.file);
   try {
     const b64 = Buffer.from(req.file.buffer).toString("base64");
     let dataURI = "data:" + req.file.mimetype + ";base64," + b64;

@@ -80,9 +80,24 @@ const getAllServiceItems = async (req, res) => {
   }
 }
 
+const deleteServiceItem = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    const serviceItem = await ServiceItem.findByIdAndDelete(id);
+    if (!serviceItem) {
+      return res.status(404).send({ error: "Service Item not found" });
+    }
+    res.status(200).send({ msg: "Service Item Deleted" });
+  } catch (err) {
+    return res.status(401).send(err.message);
+  }
+}
+
 module.exports = {
   createServiceItem,
   getOneServiceItem,
   getAllServiceItems,
   editServiceItem,
+  deleteServiceItem,
 };
