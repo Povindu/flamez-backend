@@ -6,6 +6,10 @@ const { generateAccessToken } = require("../Utils/generateAccessToken");
 
 const { generateRefreshToken } = require("../Utils/generateRefreshToken");
 
+const {
+  refreshAccessToken,
+} = require("../Utils/refreshAccessGenerate");
+
 //Admin signup
 const adminSignUp = async (req, res) => {
   
@@ -97,8 +101,33 @@ const adminChangePass = (req, res) => {
   res.send(email);
 };
 
+const refreshAT = async (req, res) => {
+
+  const { refreshToken } = req.body;
+  const refreshToken2 = refreshToken.replaceAll('"','');
+  console.log(refreshToken2);
+
+  if (!refreshToken2) {
+    return res.status(400).send({ error: "Must provide refresh token" });
+  }
+
+  refreshAccessToken(refreshToken2)
+    .then((result) => {
+      if (result) {
+        res.status(200).send({ token: result.accessToken });
+      } else {
+        throw error;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).send({ error: "Invalid refresh token" });
+    });
+};
+
 module.exports = {
   adminSignUp,
   adminSignIn,
   adminChangePass,
+  refreshAT
 };
