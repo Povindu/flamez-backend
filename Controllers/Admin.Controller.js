@@ -61,6 +61,13 @@ const adminSignIn = async (req, res) => {
   try {
     await user.comparePassword(password);
 
+    if(!user.verified){
+      return res.status(401).send({ error: "Please verify your email" });
+    }
+    
+
+
+
     const accessToken = await generateAccessToken({
       _id: user._id,
       roles: user.role,
