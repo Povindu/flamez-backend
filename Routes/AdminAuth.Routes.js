@@ -7,7 +7,6 @@ const {
 
 const express = require("express");
 
-
 const router = express.Router();
 
 // Admin Sign-up
@@ -21,5 +20,6 @@ router.post("/refreshAT", refreshAT);
 
 // Change Password
 router.post("/changepass", adminChangePass);
+//TODO
 
 module.exports = router;

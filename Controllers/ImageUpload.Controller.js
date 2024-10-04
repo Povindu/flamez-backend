@@ -7,7 +7,6 @@ const upload = Multer({
   storage,
 });
 
-
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
@@ -25,7 +24,7 @@ async function handleUpload(file) {
 const uploadImage = async (req, res) => {
   console.log("uploadImage");
 
-  upload.single("my_file")
+  upload.single("my_file");
 
   async (req, res) => {
     console.log("efef");
@@ -41,12 +40,9 @@ const uploadImage = async (req, res) => {
         message: error.message,
       });
     }
-  }
-
-
+  };
 
   res.send("Image uploaded");
-
 };
 
 module.exports = {
