@@ -2,26 +2,20 @@ const mongoose = require("mongoose");
 
 const ServiceItem = require("../Models/ServiceItem.Model");
 
-
 const createServiceItem = async (req, res) => {
   const { title, description, photoArray } = req.body;
 
   if (!title) {
-    return res
-      .status(400)
-      .send({ error: "Must provide a title" });
+    return res.status(400).send({ error: "Must provide a title" });
   }
 
   try {
     const serviceItem = new ServiceItem({ title, description, photoArray });
     await serviceItem.save();
     res.status(200).send({ msg: "Service Item Created" });
-
   } catch (err) {
-
     return res.status(401).send(err.message);
   }
-
 };
 
 const getOneServiceItem = async (req, res) => {
@@ -36,7 +30,7 @@ const getOneServiceItem = async (req, res) => {
   } catch (err) {
     return res.status(401).send(err.message);
   }
-}
+};
 
 const editServiceItem = async (req, res) => {
   const { id } = req.params;
@@ -44,7 +38,7 @@ const editServiceItem = async (req, res) => {
 
   // console.log(id, title, description, photoArray);
 
-  if (!title, !description, !photoArray) {
+  if ((!title, !description, !photoArray)) {
     return res
       .status(400)
       .send({ error: "Must provide a title, description & PhotoArray" });
@@ -64,21 +58,20 @@ const editServiceItem = async (req, res) => {
       return res.status(400).json({ error: "No such Service Item" });
     }
     res.status(200).send({ msg: "Service Item Updated" });
-  }
-  catch (err) {
+  } catch (err) {
     return res.status(401).send(err.message);
   }
-}
+};
 
 const getAllServiceItems = async (req, res) => {
   try {
     const serviceItems = await ServiceItem.find();
-
+    // console.log(serviceItems);
     res.status(200).send(serviceItems);
   } catch (err) {
     return res.status(401).send(err.message);
   }
-}
+};
 
 const deleteServiceItem = async (req, res) => {
   const { id } = req.params;
@@ -92,7 +85,7 @@ const deleteServiceItem = async (req, res) => {
   } catch (err) {
     return res.status(401).send(err.message);
   }
-}
+};
 
 module.exports = {
   createServiceItem,

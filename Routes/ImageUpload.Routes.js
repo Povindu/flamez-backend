@@ -9,7 +9,6 @@ const upload = Multer({
   storage,
 });
 
-
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
@@ -45,4 +44,3 @@ router.post("/", upload.single("my_file"), async (req, res) => {
 });
 
 module.exports = router;
-
