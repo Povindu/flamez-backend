@@ -10,7 +10,7 @@ const ImageUploadRoutes = require("./ImageUpload.Routes");
 
 router.use("/auth", AuthRoutes);
 router.use("/services", ServiceItemRoutes);
-router.use("/testi", TestaRoutes);
+router.use("/testimonials", TestaRoutes);
 router.use("/upload", AuthMiddleware, ImageUploadRoutes);
 
 router.get("/", (req, res) => {

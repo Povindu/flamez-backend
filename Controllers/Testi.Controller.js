@@ -5,6 +5,8 @@ const TestiItem = require("../Models/Testi.Model");
 const createTestiItem = async (req, res) => {
   const { name, position, description, imageLink } = req.body;
 
+  console.log(name, position, description, imageLink);
+
   if (!name) {
     return res.status(400).send({ error: "Must provide a name" });
   }
@@ -80,7 +82,8 @@ const getAllTestiItems = async (req, res) => {
 const deleteTestiItem = async (req, res) => {
   const { id } = req.params;
   if (!id) return res.status(400).send({ error: "Must provide an ID" });
-  if(!mongoose.Types.ObjectId.isValid(id)) return res.status(400).send({ error: "Invalid ID"});
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(400).send({ error: "Invalid ID" });
   console.log(id);
   try {
     const testiItem = await TestiItem.findByIdAndDelete(id);
