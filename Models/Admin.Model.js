@@ -31,6 +31,12 @@ const Admin = new mongoose.Schema(
     verified: {
       type: Boolean,
       default: false,
+    },
+    emailVerificationOTP: {
+      type: String,
+    },
+    emailVerificationExpires: {
+      type: Date,
     }
   },
   { timestamps: true }

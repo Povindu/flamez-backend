@@ -3,21 +3,30 @@ const validator = require("validator");
 const Admin = require("../Models/Admin.Model");
 
 const { generateAccessToken } = require("../Utils/generateAccessToken");
-
 const { generateRefreshToken } = require("../Utils/generateRefreshToken");
+// const { transporter } = require("../Utils/mailer");
 
-const {
-  refreshAccessToken,
-} = require("../Utils/refreshAccessGenerate");
+const { refreshAccessToken } = require("../Utils/refreshAccessGenerate");
+
+
+const nodemailer = require('nodemailer');
+
+// Create a transporter object using Gmail SMTP
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD
+  }
+});
+
 
 //Admin signup
 const adminSignUp = async (req, res) => {
-  
   console.log("adminsignup");
 
   const { firstName, lastName, email, password } = req.body;
   console.log(firstName, lastName, email, password);
-
 
   if (!firstName || !lastName || !email || !password) {
     return res
@@ -41,7 +50,33 @@ const adminSignUp = async (req, res) => {
 
     const user = new Admin({ firstName, lastName, email, password });
 
+    const OTP = Math.floor(100000 + Math.random() * 900000);
+
+    // Save the OTP to the user's document in the database and set an expiry time
+    user.emailVerificationOTP = OTP;
+    user.emailVerificationExpires = Date.now() + 600000; // 10 minutes
     await user.save();
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "👋 Welcome to Flamez Events, Confirm your email",
+      html: `
+        <p>Hello,</p>
+        <p>Welcome to the Flamez Events.</p>
+        <p>Your OTP for registration is: <strong>${OTP}</strong></p>
+        <p>If you did not request this, please ignore this email and your registration will remain unchanged.</p>
+        <p>Thank you.</p>
+      `,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("❌ Error:", error.message);
+      } else {
+        console.log("✅ Email sent:", info.response);
+      }
+    });
 
     res.status(200).send({ msg: "Signup Complete" });
   } catch (err) {
@@ -65,12 +100,9 @@ const adminSignIn = async (req, res) => {
   try {
     await user.comparePassword(password);
 
-    if(!user.verified){
+    if (!user.verified) {
       return res.status(401).send({ error: "Please verify your email" });
     }
-    
-
-
 
     const accessToken = await generateAccessToken({
       _id: user._id,
@@ -102,9 +134,8 @@ const adminChangePass = (req, res) => {
 };
 
 const refreshAT = async (req, res) => {
-
   const { refreshToken } = req.body;
-  const refreshToken2 = refreshToken.replaceAll('"','');
+  const refreshToken2 = refreshToken.replaceAll('"', "");
   console.log(refreshToken2);
 
   if (!refreshToken2) {
@@ -129,5 +160,5 @@ module.exports = {
   adminSignUp,
   adminSignIn,
   adminChangePass,
-  refreshAT
+  refreshAT,
 };
