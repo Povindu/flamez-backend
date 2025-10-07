@@ -16,8 +16,7 @@ const adminSignUp = async (req, res) => {
   console.log("adminsignup");
 
   const { firstName, lastName, email, password } = req.body;
-  console.log(firstName, lastName, email, password);
-
+  // console.log(firstName, lastName, email, password);
 
   if (!firstName || !lastName || !email || !password) {
     return res
@@ -35,7 +34,7 @@ const adminSignUp = async (req, res) => {
     if (userFind) {
       return res.status(400).send({
         error:
-          "Duplicate Email, please enter a diiferent email or signin using the email",
+          "Duplicate Email, please enter a different email or signin using the email",
       });
     }
 

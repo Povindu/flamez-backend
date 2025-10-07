@@ -75,7 +75,7 @@ const getAllServiceItems = async (req, res) => {
 
 const deleteServiceItem = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
+  // console.log(id);
   try {
     const serviceItem = await ServiceItem.findByIdAndDelete(id);
     if (!serviceItem) {
